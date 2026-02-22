@@ -7,9 +7,10 @@ interface HomeProps {
   onSparring: () => void;
   onToggleTheme: () => void;
   theme: 'light' | 'dark';
+  isAdmin?: boolean;
 }
 
-const Home: React.FC<HomeProps> = ({ onNavigate, onSparring, onToggleTheme, theme }) => {
+const Home: React.FC<HomeProps> = ({ onNavigate, onSparring, onToggleTheme, theme, isAdmin = false }) => {
   const [activeNav, setActiveNav] = useState<string>('home');
 
   const menuItems = [
@@ -134,6 +135,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, onSparring, onToggleTheme, them
       accentBg: 'rgba(34,197,94,0.06)',
       accentBorder: 'rgba(34,197,94,0.2)',
       action: () => onNavigate('DASHBOARD'),
+      adminOnly: true,
     },
     {
       id: 'curriculum',
@@ -529,7 +531,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate, onSparring, onToggleTheme, them
 
           {/* GRID DE MÓDULOS */}
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-            {menuItems.slice(1).map((item) => (
+            {menuItems.slice(1).filter(item => !item.adminOnly || isAdmin).map((item) => (
               <button
                 key={item.id}
                 onClick={item.action}

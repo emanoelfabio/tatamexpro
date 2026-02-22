@@ -17,6 +17,77 @@ import Notes from './components/Notes';
 import Dashboard from './components/Dashboard';
 import MyClasses from './components/MyClasses';
 import StudentApp from './components/StudentApp';
+import Auth from './components/Auth';
+
+// Configuração Supabase
+const SUPABASE_URL = 'https://voqvpxtyoawlopmeaqiy.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZvcXZweHR5b2F3bG9wbWVhcWl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3MTY2NzcsImV4cCI6MjA4NzI5MjY3N30.VY2wb4dC2wNcCbUDWK1e6-UYQnIuEfJeJJhq5yblPKE';
+
+class TatamexSupabase {
+  url: string;
+  key: string;
+  currentUser: any = null;
+
+  constructor() {
+    this.url = SUPABASE_URL;
+    this.key = SUPABASE_ANON_KEY;
+  }
+
+  getHeaders() {
+    return {
+      'apikey': this.key,
+      'Authorization': `Bearer ${this.key}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    };
+  }
+
+  async login(email: string, password: string) {
+    const response = await fetch(`${this.url}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: this.getHeaders(),
+      body: JSON.stringify({ email, password })
+    });
+    const data = await response.json();
+    if (response.ok) {
+      return { data, error: null };
+    } else {
+      return { data: null, error: { message: data.error_description || data.msg } };
+    }
+  }
+
+  async register(email: string, password: string, nome: string) {
+    const response = await fetch(`${this.url}/auth/v1/signup`, {
+      method: 'POST',
+      headers: this.getHeaders(),
+      body: JSON.stringify({ email, password })
+    });
+    const data = await response.json();
+    if (response.ok) {
+      return { data, error: null };
+    } else {
+      return { data: null, error: { message: data.error_description || data.msg } };
+    }
+  }
+
+  async signOut() {
+    const savedSession = localStorage.getItem('tatamex_session');
+    if (savedSession) {
+      const session = JSON.parse(savedSession);
+      await fetch(`${this.url}/auth/v1/logout`, {
+        method: 'POST',
+        headers: {
+          ...this.getHeaders(),
+          'Authorization': `Bearer ${session.access_token}`
+        }
+      });
+    }
+    localStorage.removeItem('tatamex_session');
+    this.currentUser = null;
+  }
+}
+
+const supabase = new TatamexSupabase();
 
 const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('HOME');
@@ -25,6 +96,8 @@ const App: React.FC = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const [selectedLessonPlan, setSelectedLessonPlan] = useState<LessonPlan | null>(null);
   const [selectedPresenceClassId, setSelectedPresenceClassId] = useState<string | null>(null);
+  const [user, setUser] = useState<any>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // Load theme and custom presets on mount
   useEffect(() => {
@@ -41,6 +114,39 @@ const App: React.FC = () => {
         console.error("Failed to parse custom presets", e);
       }
     }
+
+    // Check for existing session
+    const savedSession = localStorage.getItem('tatamex_session');
+    if (savedSession) {
+      try {
+        const session = JSON.parse(savedSession);
+        // Fetch user data
+        fetch(`${SUPABASE_URL}/rest/v1/usuarios?auth_id=eq.${session.user.id}&select=*`, {
+          headers: supabase.getHeaders()
+        })
+        .then(res => res.json())
+        .then(userData => {
+          if (userData && userData.length > 0) {
+            setUser({ ...session.user, nome: userData[0].nome, tipo: userData[0].tipo });
+            setIsAdmin(userData[0].tipo === 'admin');
+          }
+        });
+      } catch (e) {
+        console.error("Failed to restore session", e);
+      }
+    }
+  }, []);
+
+  const handleLogin = useCallback((userData: any) => {
+    setUser(userData);
+    setIsAdmin(userData.tipo === 'admin');
+  }, []);
+
+  const handleLogout = useCallback(async () => {
+    await supabase.signOut();
+    setUser(null);
+    setIsAdmin(false);
+    setCurrentScreen('HOME');
   }, []);
 
   const toggleTheme = useCallback(() => {
@@ -115,7 +221,37 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen overflow-hidden flex flex-col" style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
-      {currentScreen === 'HOME' && <Home onNavigate={navigateTo} onSparring={handleStartSparring} onToggleTheme={toggleTheme} theme={theme} />}
+      {!user ? (
+        <Auth onLogin={handleLogin} supabase={supabase} />
+      ) : (
+        <>
+          {/* Header com informações do usuário e logout */}
+          <div className="bg-slate-800 border-b border-slate-700 px-4 py-2 flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              {user.foto ? (
+                <img src={user.foto} alt={user.nome} className="w-8 h-8 rounded-full" />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold">
+                  {user.nome?.charAt(0).toUpperCase() || 'U'}
+                </div>
+              )}
+              <div>
+                <span className="text-white font-medium">{user.nome}</span>
+                {isAdmin && <span className="ml-2 text-xs bg-red-600 text-white px-2 py-0.5 rounded">ADMIN</span>}
+              </div>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="text-slate-400 hover:text-red-400 text-sm flex items-center gap-1"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Sair
+            </button>
+          </div>
+          
+          {currentScreen === 'HOME' && <Home onNavigate={navigateTo} onSparring={handleStartSparring} onToggleTheme={toggleTheme} theme={theme} isAdmin={isAdmin} />}
       {currentScreen === 'CONFIG' && (
         <Config 
           onBack={() => navigateTo('HOME')} 
@@ -193,6 +329,8 @@ const App: React.FC = () => {
       )}
       {currentScreen === 'STUDENT_APP' && (
         <StudentApp onBack={() => navigateTo('HOME')} />
+      )}
+        </>
       )}
     </div>
   );

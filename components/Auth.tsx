@@ -19,6 +19,8 @@ const Auth: React.FC<AuthProps> = ({ onLogin, supabase }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [adminCode, setAdminCode] = useState('');
+  const ADMIN_SECRET = 'TATAMEX2026';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +36,9 @@ const Auth: React.FC<AuthProps> = ({ onLogin, supabase }) => {
         if (authError) {
           setError(authError.message);
         } else if (data?.user) {
+          // Salvar sessão
+          localStorage.setItem('tatamex_session', JSON.stringify(data));
+          
           // Buscar dados do usuário no banco
           try {
             const response = await fetch(
@@ -60,6 +65,9 @@ const Auth: React.FC<AuthProps> = ({ onLogin, supabase }) => {
         if (authError) {
           setError(authError.message);
         } else if (data?.user) {
+          // Salvar sessão temporariamente para login automático
+          localStorage.setItem('tatamex_session', JSON.stringify({ ...data, user: { ...data.user, email } }));
+          
           // Criar perfil de usuário
           try {
             await fetch(
@@ -71,7 +79,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin, supabase }) => {
                   auth_id: data.user.id,
                   nome: nome,
                   email: email,
-                  tipo: 'aluno',
+                  tipo: adminCode === ADMIN_SECRET ? 'admin' : 'aluno',
                   telefone: ''
                 })
               }
@@ -85,6 +93,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin, supabase }) => {
           setEmail('');
           setPassword('');
           setNome('');
+          setAdminCode('');
         }
       }
     } catch (err: any) {
@@ -129,19 +138,34 @@ const Auth: React.FC<AuthProps> = ({ onLogin, supabase }) => {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             {!isLogin && (
-              <div>
-                <label className="block text-slate-400 text-sm font-medium mb-2 uppercase tracking-wide">
-                  Nome Completo
-                </label>
-                <input
-                  type="text"
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
-                  placeholder="Seu nome"
-                  required={!isLogin}
-                  className="w-full bg-slate-900/50 border border-slate-600/50 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all duration-300"
-                />
-              </div>
+              <>
+                <div>
+                  <label className="block text-slate-400 text-sm font-medium mb-2 uppercase tracking-wide">
+                    Nome Completo
+                  </label>
+                  <input
+                    type="text"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
+                    placeholder="Seu nome"
+                    required={!isLogin}
+                    className="w-full bg-slate-900/50 border border-slate-600/50 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all duration-300"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-slate-400 text-sm font-medium mb-2 uppercase tracking-wide">
+                    Código Admin (opcional)
+                  </label>
+                  <input
+                    type="password"
+                    value={adminCode}
+                    onChange={(e) => setAdminCode(e.target.value)}
+                    placeholder="Deixe vazio para aluno"
+                    className="w-full bg-slate-900/50 border border-slate-600/50 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all duration-300"
+                  />
+                </div>
+              </>
             )}
 
             <div>
