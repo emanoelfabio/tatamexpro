@@ -1,0 +1,23 @@
+{
+    "name": "TatameX Performance",
+    "short_name": "TatameX",
+    "description": "Sistema de gerenciamento de academia de artes marciais",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#020617",
+    "theme_color": "#ef4444",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23020617' width='100' height='100' rx='20'/><text x='50' y='65' font-size='50' text-anchor='middle'>🥋</text></svg>",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["sports", "fitness", "business"],
+    "lang": "pt-BR",
+    "dir": "ltr",
+    "scope": "/",
+    "prefer_related_applications": false
+}

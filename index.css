@@ -1,0 +1,611 @@
+/* TatameX Performance - Premium Dark Theme CSS */
+/* Global styles for all components */
+
+/* ===== CSS VARIABLES ===== */
+:root {
+  --bg-primary: #020617;
+  --bg-secondary: #0f172a;
+  --bg-card: #111827;
+  --color-red: #ef4444;
+  --color-red-dark: #dc2626;
+  --color-green: #22c55e;
+  --color-gold: #f59e0b;
+  --text-primary: #e5e7eb;
+  --text-secondary: #94a3b8;
+  --border-color: #1e293b;
+}
+
+/* ===== GLOBAL RESET ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--bg-primary);
+}
+
+body {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Inter', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== FONT OVERRIDES ===== */
+.font-bebas {
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.font-orbitron {
+  font-family: 'Orbitron', sans-serif !important;
+}
+
+/* Large bold uppercase titles get Orbitron */
+h1.font-black,
+h2.font-black {
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* ===== BACKGROUND OVERRIDES ===== */
+
+/* Force dark backgrounds everywhere */
+.bg-tatame-white {
+  background-color: var(--bg-primary) !important;
+}
+
+.dark .bg-tatame-black {
+  background-color: var(--bg-primary) !important;
+}
+
+.bg-white {
+  background-color: var(--bg-card) !important;
+}
+
+.dark .bg-zinc-900 {
+  background-color: var(--bg-card) !important;
+}
+
+.dark .bg-\[\#1a1a1a\] {
+  background-color: var(--bg-card) !important;
+}
+
+.bg-zinc-50,
+.bg-zinc-100 {
+  background-color: var(--bg-secondary) !important;
+}
+
+.dark .bg-zinc-800 {
+  background-color: rgba(30, 41, 59, 0.8) !important;
+}
+
+/* ===== TEXT OVERRIDES ===== */
+
+.text-tatame-black,
+.dark .text-tatame-white,
+.dark .text-white {
+  color: var(--text-primary) !important;
+}
+
+.text-tatame-red,
+.dark .text-tatame-red {
+  color: var(--color-red) !important;
+}
+
+.text-tatame-gold,
+.dark .text-tatame-gold {
+  color: var(--color-gold) !important;
+}
+
+.text-zinc-500,
+.text-zinc-400,
+.dark .text-zinc-400,
+.dark .text-zinc-500 {
+  color: var(--text-secondary) !important;
+}
+
+.text-zinc-600,
+.dark .text-zinc-600 {
+  color: #64748b !important;
+}
+
+/* ===== BORDER OVERRIDES ===== */
+
+.border-zinc-100,
+.border-zinc-200 {
+  border-color: var(--border-color) !important;
+}
+
+.dark .border-zinc-800,
+.dark .border-zinc-700 {
+  border-color: var(--border-color) !important;
+}
+
+/* ===== BUTTON OVERRIDES ===== */
+
+/* Primary red button */
+.bg-tatame-red {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3) !important;
+  transition: all 0.2s ease !important;
+}
+
+.bg-tatame-red:hover {
+  box-shadow: 0 6px 25px rgba(239, 68, 68, 0.5) !important;
+  transform: translateY(-1px) !important;
+}
+
+.bg-tatame-red:active {
+  transform: scale(0.97) !important;
+}
+
+/* Gold button */
+.bg-tatame-gold {
+  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+}
+
+/* Filter pills */
+.rounded-full.bg-zinc-100,
+.rounded-full.dark\:bg-zinc-800 {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-secondary) !important;
+}
+
+/* ===== INPUT OVERRIDES ===== */
+
+input[type="text"],
+input[type="number"],
+input[type="time"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+  background: rgba(15, 23, 42, 0.9) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+  border-radius: 10px !important;
+  font-family: 'Inter', sans-serif !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="time"]:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #475569 !important;
+  opacity: 1 !important;
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+  accent-color: #ef4444;
+}
+
+/* Range */
+input[type="range"] {
+  accent-color: #ef4444;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ===== CARD OVERRIDES ===== */
+
+/* All card variants */
+.rounded-xl,
+.rounded-2xl {
+  transition: all 0.2s ease;
+}
+
+.rounded-xl.border-2,
+.rounded-2xl.border-2 {
+  border-radius: 14px !important;
+}
+
+/* Hover effects on clickable cards */
+.cursor-pointer.rounded-xl:hover,
+.cursor-pointer.rounded-2xl:hover {
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+  transform: translateY(-1px);
+}
+
+/* ===== SCROLLBAR ===== */
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(239, 68, 68, 0.5);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-red);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===== MODAL OVERLAYS ===== */
+
+.fixed.inset-0.bg-black\/50,
+.fixed.inset-0.bg-black\/80,
+.fixed.inset-0.bg-black\/90 {
+  background: rgba(2, 6, 23, 0.88) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* Modal content boxes */
+.bg-white.rounded-2xl,
+.bg-white.rounded-xl,
+.dark .bg-zinc-900.rounded-2xl,
+.dark .bg-zinc-900.rounded-xl {
+  background: #111827 !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.6); }
+}
+
+.animate-in {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.slide-in-from-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+.zoom-in-95 {
+  animation: zoomIn 0.25s ease-out;
+}
+
+.duration-300 {
+  animation-duration: 0.3s;
+}
+
+/* ===== SELECTION ===== */
+
+::selection {
+  background: rgba(239, 68, 68, 0.3);
+  color: white;
+}
+
+::-moz-selection {
+  background: rgba(239, 68, 68, 0.3);
+  color: white;
+}
+
+/* ===== FOCUS ===== */
+
+:focus-visible {
+  outline: 2px solid rgba(239, 68, 68, 0.5);
+  outline-offset: 2px;
+}
+
+/* ===== TRANSITIONS ===== */
+
+button, a, input, select, textarea {
+  transition: all 0.2s ease;
+}
+
+/* ===== TECHNIQUES COMPONENT ===== */
+
+/* Header area */
+.flex-1.flex.flex-col.p-4 {
+  background-color: var(--bg-primary);
+}
+
+/* Technique cards */
+.bg-white.dark\:bg-zinc-900.rounded-xl.p-4 {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Category filter pills active */
+.bg-tatame-red.text-white.rounded-full {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.4) !important;
+}
+
+/* ===== NOTES COMPONENT ===== */
+
+/* Note cards */
+.rounded-xl.shadow-sm {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* ===== MY CLASSES COMPONENT ===== */
+
+/* Class cards */
+.rounded-2xl.shadow-md {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ===== PRESENCE MANAGER ===== */
+
+/* Student list items */
+.rounded-xl.border-2.border-zinc-100 {
+  border-color: var(--border-color) !important;
+  background: var(--bg-card) !important;
+}
+
+/* ===== LESSON BUILDER ===== */
+
+/* Step cards */
+.rounded-2xl.bg-zinc-50 {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+/* ===== TRAINING PLAN ===== */
+
+/* Plan section cards */
+.rounded-2xl.overflow-hidden {
+  border: 1px solid var(--border-color) !important;
+}
+
+/* ===== CLASS HISTORY ===== */
+
+/* History cards */
+.rounded-xl.border.border-zinc-200 {
+  border-color: var(--border-color) !important;
+  background: var(--bg-card) !important;
+}
+
+/* ===== GUIDED CLASS ===== */
+
+/* Phase display */
+.bg-tatame-gold {
+  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+}
+
+/* ===== CONFIG COMPONENT ===== */
+
+/* Config sections */
+.rounded-2xl.bg-white {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+/* ===== PRESETS COMPONENT ===== */
+
+/* Preset cards */
+.rounded-2xl.border-2.border-zinc-100 {
+  border-color: var(--border-color) !important;
+  background: var(--bg-card) !important;
+}
+
+/* ===== STORE COMPONENT ===== */
+
+/* Product cards */
+.rounded-3xl {
+  border-radius: 20px !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+/* ===== DIVIDERS ===== */
+
+.border-b,
+.border-t,
+hr {
+  border-color: var(--border-color) !important;
+}
+
+/* ===== PROGRESS BARS ===== */
+
+.h-2.bg-zinc-100,
+.h-2.dark\:bg-zinc-800,
+.h-1.bg-zinc-100,
+.h-1.dark\:bg-zinc-800 {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-radius: 2px !important;
+}
+
+/* ===== BADGE STYLES ===== */
+
+/* Difficulty badges */
+.text-green-500.bg-green-500\/10 {
+  color: #22c55e !important;
+  background: rgba(34, 197, 94, 0.1) !important;
+  border: 1px solid rgba(34, 197, 94, 0.2) !important;
+  border-radius: 6px !important;
+}
+
+.text-tatame-gold.bg-tatame-gold\/10 {
+  color: #f59e0b !important;
+  background: rgba(245, 158, 11, 0.1) !important;
+  border: 1px solid rgba(245, 158, 11, 0.2) !important;
+  border-radius: 6px !important;
+}
+
+.text-tatame-red.bg-tatame-red\/10 {
+  color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+  border-radius: 6px !important;
+}
+
+/* ===== SHADOW OVERRIDES ===== */
+
+.shadow-xl {
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+.shadow-lg {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+.shadow-md {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
+.shadow-sm {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* ===== GRADIENT OVERRIDES ===== */
+
+.bg-gradient-to-r.from-tatame-red {
+  background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(220,38,38,0.08)) !important;
+  border: 1px solid rgba(239, 68, 68, 0.25) !important;
+  color: var(--text-primary) !important;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+  /* Ensure bottom nav doesn't overlap content */
+  .flex-1.overflow-y-auto {
+    padding-bottom: 80px;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Desktop card hover */
+  .cursor-pointer:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* ===== ACTIVE STATES ===== */
+
+.active\:scale-95:active {
+  transform: scale(0.95) !important;
+}
+
+.active\:scale-90:active {
+  transform: scale(0.90) !important;
+}
+
+/* ===== ZINC OVERRIDES (comprehensive) ===== */
+
+.bg-zinc-200 { background-color: rgba(30, 41, 59, 0.8) !important; }
+.bg-zinc-300 { background-color: rgba(30, 41, 59, 0.9) !important; }
+.bg-zinc-700 { background-color: rgba(15, 23, 42, 0.9) !important; }
+.bg-zinc-800 { background-color: rgba(15, 23, 42, 0.8) !important; }
+.bg-zinc-900 { background-color: var(--bg-card) !important; }
+
+.text-zinc-300 { color: #94a3b8 !important; }
+.text-zinc-400 { color: #94a3b8 !important; }
+.text-zinc-500 { color: #64748b !important; }
+.text-zinc-600 { color: #475569 !important; }
+
+.border-zinc-700 { border-color: var(--border-color) !important; }
+.border-zinc-800 { border-color: var(--border-color) !important; }
+
+/* ===== HOVER STATES ===== */
+
+.hover\:border-tatame-red\/30:hover {
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+.hover\:text-tatame-red:hover {
+  color: #ef4444 !important;
+}
+
+.hover\:opacity-90:hover {
+  opacity: 0.9 !important;
+}
+
+/* ===== TATAMEX SPECIFIC PREMIUM TOUCHES ===== */
+
+/* All page containers */
+.flex-1.flex.flex-col {
+  background-color: var(--bg-primary);
+}
+
+/* Page headers with back button */
+.flex.items-center.justify-between.mb-6,
+.flex.items-center.justify-between.mb-4 {
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Section titles */
+.text-xs.font-black.uppercase.tracking-widest {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.15em;
+}
+
+/* Large display numbers */
+.text-3xl.font-black,
+.text-4xl.font-black {
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* ===== PREMIUM GLOW EFFECTS ===== */
+
+/* Red glow on active elements */
+.border-tatame-red {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.2) !important;
+}
+
+/* Gold glow */
+.border-tatame-gold {
+  border-color: #f59e0b !important;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.2) !important;
+}
+
+/* ===== LOADING STATES ===== */
+
+.opacity-30 {
+  opacity: 0.3;
+}
+
+/* ===== PRINT ===== */
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
