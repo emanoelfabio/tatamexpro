@@ -99,3 +99,32 @@ As políticas criadas acima permitem acesso total para simplificar o desenvolvim
 ---
 
 **Data da última atualização**: 2026-02-22
+
+---
+
+## Como Criar Usuário Administrador
+
+Você pode criar um usuário admin diretamente no Supabase:
+
+### Passo 1: Liste os usuários existentes
+No SQL Editor, execute:
+```sql
+SELECT id, email, created_at FROM auth.users ORDER BY created_at DESC LIMIT 10;
+```
+
+### Passo 2: Insira o usuário na tabela usuarios
+Após criar o usuário no app (mesmo com erro), execute:
+```sql
+-- Substitua o auth_id pelo ID do usuário que você quer tornar admin:
+INSERT INTO usuarios (auth_id, nome, email, tipo, telefone)
+VALUES (
+  'COLOQUE_O_AUTH_ID_AQUI',
+  'Nome do Admin',
+  'admin@email.com',
+  'admin',
+  ''
+);
+```
+
+### Para encontrar o auth_id:
+Se o usuário já se registrou (mesmo com erro), você pode ver o ID em auth.users
